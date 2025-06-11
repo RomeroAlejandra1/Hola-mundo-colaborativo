@@ -1,0 +1,16 @@
+import tkinter as tk
+
+def mostrar_mensaje():
+    etiqueta.config(text="¡Hola, Mundo!")
+
+ventana = tk.Tk()
+ventana.title("Interfaz con Botón")
+ventana.geometry("500x300")
+
+etiqueta = tk.Label(ventana, text="", font=("Arial", 14))
+etiqueta.pack(pady=20)
+
+boton = tk.Button(ventana, t,ext="click", command=mostrar_mensaje, bg="pink")
+boton.pack()
+
+ventana.mainloop()
