@@ -1,4 +1,4 @@
-# Trabajo-en-equipo
+# HOLA-MUNDO-COLABORATIVO
 Esta es una practica de equipo, a cada quien le toco realizar una parte del trabajo colaborativo.
 
 Comenzamos con PSeint que realmente nos fue de mucha utilidad, ya que creamos un pseudocodigo de "Hola Mundo". Esto nos permitio entender la lógica en programación, sin tener que preocuparnos por la sintaxis mas complicada de otros lenguajes de programacion, basicamente esto solo nos ayudo para saber la estructura de nuestro programa (realizado por Alexa Itzel). 
