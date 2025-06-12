@@ -1,0 +1,95 @@
+import tkinter as tk
+from tkinter import messagebox
+
+class JuegoGato:
+    def __init__(self, ventana):
+        self.ventana = ventana
+        self.ventana.title("Gato - Juego Simple")
+
+        self.turno = "X"  
+        self.puntaje_j1 = 0
+        self.puntaje_j2 = 0
+
+        self.crear_interfaz()
+
+    def crear_interfaz(self):
+        self.etiqueta_puntaje = tk.Label(
+            self.ventana,
+            text="Jugador 1: 0 | Jugador 2: 0",
+            font=("Arial", 14)
+        )
+        self.etiqueta_puntaje.grid(row=0, column=0, columnspan=3, pady=5)
+
+        self.botones = []
+        for fila in range(3):
+            fila_botones = []
+            for col in range(3):
+                boton = tk.Button(
+                    self.ventana, text="", width=8, height=4,
+                    font=("Arial", 20),
+                    command=lambda f=fila, c=col: self.jugar(f, c)
+                )
+                boton.grid(row=fila + 1, column=col)
+                fila_botones.append(boton)
+            self.botones.append(fila_botones)
+
+        self.boton_reiniciar = tk.Button(
+            self.ventana, text="Reiniciar", font=("Arial", 12),
+            command=self.reiniciar_tablero
+        )
+        self.boton_reiniciar.grid(row=4, column=0, columnspan=3, pady=5)
+
+    def jugar(self, fila, col):
+        boton = self.botones[fila][col]
+        if boton["text"] == "":
+            boton["text"] = self.turno
+
+            if self.hay_ganador():
+                jugador = "Jugador 1" if self.turno == "X" else "Jugador 2"
+                messagebox.showinfo("Fin del juego", f"¡{jugador} gana!")
+                if self.turno == "X":
+                    self.puntaje_j1 += 1
+                else:
+                    self.puntaje_j2 += 1
+                self.actualizar_puntaje()
+                self.reiniciar_tablero()
+            elif self.esta_lleno():
+                messagebox.showinfo("Empate", "¡Empate!")
+                self.reiniciar_tablero()
+            else:
+                self.turno = "O" if self.turno == "X" else "X"
+
+    def hay_ganador(self):
+        b = self.botones
+        for i in range(3):
+            if b[i][0]["text"] == b[i][1]["text"] == b[i][2]["text"] != "":
+                return True
+            if b[0][i]["text"] == b[1][i]["text"] == b[2][i]["text"] != "":
+                return True
+        if b[0][0]["text"] == b[1][1]["text"] == b[2][2]["text"] != "":
+            return True
+        if b[0][2]["text"] == b[1][1]["text"] == b[2][0]["text"] != "":
+            return True
+        return False
+
+    def esta_lleno(self):
+        for fila in self.botones:
+            for boton in fila:
+                if boton["text"] == "":
+                    return False
+        return True
+
+    def reiniciar_tablero(self):
+        for fila in self.botones:
+            for boton in fila:
+                boton["text"] = ""
+        self.turno = "X"
+
+    def actualizar_puntaje(self):
+        self.etiqueta_puntaje.config(
+            text=f"Jugador 1: {self.puntaje_j1} | Jugador 2: {self.puntaje_j2}"
+        )
+
+ventana = tk.Tk()
+juego = JuegoGato(ventana)
+ventana.mainloop()
