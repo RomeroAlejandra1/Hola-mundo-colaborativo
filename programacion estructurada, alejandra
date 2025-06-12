@@ -1,0 +1,81 @@
+def imprimir_tablero(tablero):
+
+    print("\n")
+    print(f" {tablero[0]} | {tablero[1]} | {tablero[2]} ")
+    print("-----------")
+    print(f" {tablero[3]} | {tablero[4]} | {tablero[5]} ")
+    print("-----------")
+    print(f" {tablero[6]} | {tablero[7]} | {tablero[8]} ")
+    print("\n")
+
+def verificar_ganador(tablero, jugador):
+    for i in range(0, 9, 3):
+        if tablero[i] == tablero[i+1] == tablero[i+2] == jugador:
+            return True
+    for i in range(3):
+        if tablero[i] == tablero[i+3] == tablero[i+6] == jugador:
+            return True
+    if tablero[0] == tablero[4] == tablero[8] == jugador:
+        return True
+    if tablero[2] == tablero[4] == tablero[6] == jugador:
+        return True
+    return False
+
+def jugar_gato():
+    jugador_actual = "X"
+    tablero = [" " for _ in range(9)]
+    juego_terminado = False
+    turnos = 0
+
+    while not juego_terminado:
+        imprimir_tablero(tablero)
+        
+        try:
+            movimiento = int(input(f"Jugador {jugador_actual}, elige una casilla (1-9): ")) - 1
+        except ValueError:
+            print("Entrada inválida. Por favor, ingresa un número del 1 al 9.")
+            continue
+
+        if 0 <= movimiento <= 8 and tablero[movimiento] == " ":
+            tablero[movimiento] = jugador_actual
+            turnos += 1
+
+            if verificar_ganador(tablero, jugador_actual):
+                imprimir_tablero(tablero)
+                print(f"¡Felicidades, Jugador {jugador_actual} ha ganado!")
+                juego_terminado = True
+                return jugador_actual
+            elif turnos == 9:
+                imprimir_tablero(tablero)
+                print("¡Es un empate!")
+                juego_terminado = True
+                return "empate"
+            else:
+                jugador_actual = "O" if jugador_actual == "X" else "X"
+        else:
+            print("Movimiento inválido. La casilla ya está ocupada o el número no es válido.")
+
+def main():
+    victorias_jugador_X = 0
+    victorias_jugador_O = 0
+
+    while True:
+        print("\n--- ¡Bienvenido al Gato! ---")
+        ganador = jugar_gato()
+
+        if ganador == "X":
+            victorias_jugador_X += 1
+        elif ganador == "O":
+            victorias_jugador_O += 1
+        
+        print("\n--- Marcador ---")
+        print(f"Victorias Jugador X: {victorias_jugador_X}")
+        print(f"Victorias Jugador O: {victorias_jugador_O}")
+
+        reiniciar = input("\n¿Quieres jugar otra vez? (s/n): ").lower()
+        if reiniciar != "s":
+            print("¡Gracias por jugar!")
+            break
+
+if __name__ == "__main__":
+    main()
