@@ -1,0 +1,18 @@
+Clase: juego de gato
+Atributos:
+•  root
+•  turno 
+•  contador_x 
+•  contador_o 
+•  tablero
+•  botones
+•  marcador
+•  boton_reiniciar
+Metodos:
+•  __init__(self, root)
+•  crear_botones(self)
+•  click(self, fila, col)
+•  verificar_ganador(self)                                              
+•  empate(self)
+•  reiniciar_juego(self)                                                                              |
+•  actualizar_marcador(self)
